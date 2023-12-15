@@ -1,14 +1,8 @@
 import {
-    IsArray,
-    IsLatitude,
-    IsLongitude,
+    IsMongoId,
     IsNotEmpty,
-    IsNumber,
     IsOptional,
-    IsPositive,
     IsString,
-    IsUrl,
-    Min,
     MinLength,
     ValidateIf,
     ValidateNested,
@@ -18,6 +12,10 @@ import { VaccinationsDto } from './vaccinations-pet.dto'
 import { Type } from 'class-transformer'
 
 export class CreatePetDto {
+    @IsNotEmpty()
+    @IsMongoId()
+    readonly userId: string
+
     @IsNotEmpty()
     @IsString()
     readonly name: string

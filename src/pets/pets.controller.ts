@@ -44,7 +44,7 @@ export class PetsController {
         }
     }
 
-    @Get()
+    @Get('all')
     async findAll() {
         try {
             return await this.petsService.findAll()

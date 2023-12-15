@@ -2,8 +2,14 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { ImagesDto } from '../dto/images-pet.dt'
 import { VaccinationsDto } from '../dto/vaccinations-pet.dto'
 
+//* Relations databases
+import { Schema as MongooseSchema } from 'mongoose'
+
 @Schema()
 export class Pet {
+    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
+    userId: string
+
     @Prop({ required: true, trim: true })
     name: string
 
