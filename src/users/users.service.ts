@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 
@@ -30,11 +30,17 @@ export class UsersService {
 
     async findOne(id: string) {
         const user = await this.userModel.findById(id)
+        if (!user) {
+            throw new NotFoundException(`Usuario no encontrado`)
+        }
         return this.NoPassword(user)
     }
 
     async update(id: string, updateUserDto: UpdateUserDto) {
         const user = await this.userModel.findById(id)
+        if (!user) {
+            throw new NotFoundException(`Usuario no encontrado`)
+        }
         const updateUser = await this.userModel.findByIdAndUpdate(
             id,
             { $set: updateUserDto },
@@ -49,6 +55,10 @@ export class UsersService {
     }
 
     async remove(id: string) {
+        const user = await this.userModel.findById(id)
+        if (!user) {
+            throw new NotFoundException(`Usuario no encontrado`)
+        }
         return await this.userModel.findByIdAndDelete(id)
     }
 }

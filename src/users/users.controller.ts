@@ -43,7 +43,7 @@ export class UsersController {
         try {
             return await this.usersService.findOne(id)
         } catch (error) {
-            return error
+            return error.response
         }
     }
 
@@ -58,6 +58,7 @@ export class UsersController {
             if (error.code === 11000) {
                 this.ConflictMessages(error)
             }
+            return error.response
         }
     }
 
@@ -67,7 +68,7 @@ export class UsersController {
             await this.usersService.remove(id)
             return { message: 'Usuario Borrado!' }
         } catch (error) {
-            return error
+            return error.response
         }
     }
 }
