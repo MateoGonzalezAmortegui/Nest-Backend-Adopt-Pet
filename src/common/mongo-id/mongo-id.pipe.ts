@@ -10,7 +10,7 @@ import { isMongoId } from 'class-validator'
 export class MongoIdPipe implements PipeTransform {
     transform(value: any, metadata: ArgumentMetadata) {
         if (!isMongoId(value)) {
-            throw new BadRequestException('No se encontro al usuario')
+            throw new BadRequestException('No se encontro en la base de datos')
         }
         return value
     }
