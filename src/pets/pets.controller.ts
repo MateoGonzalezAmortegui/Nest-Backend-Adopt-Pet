@@ -62,6 +62,15 @@ export class PetsController {
         }
     }
 
+    @Get('user/:id')
+    async findUserPets(@Param('id', MongoIdPipe) id: string) {
+        try {
+            return await this.petsService.findUserPets(id)
+        } catch (error) {
+            return error
+        }
+    }
+
     @Patch('updateInfo/:id')
     async updateInfo(
         @Param('id', MongoIdPipe) id: string,

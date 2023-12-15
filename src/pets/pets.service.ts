@@ -49,6 +49,10 @@ export class PetsService {
         return pet
     }
 
+    async findUserPets(id: string) {
+        return await this.petModel.find({ userId: id })
+    }
+
     async updateInfo(id: string, updatePetDto: UpdatePetDto) {
         await this.findOne(id)
         const updatePet = await this.petModel.findByIdAndUpdate(
