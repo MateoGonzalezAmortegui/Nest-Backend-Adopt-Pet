@@ -5,7 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto'
 //* Database
 import { InjectModel } from '@nestjs/mongoose'
 import { User } from './entities/user.entity'
-import { Model, Types } from 'mongoose'
+import { Model } from 'mongoose'
 
 //* External
 import * as bcrypt from 'bcrypt'
@@ -34,6 +34,10 @@ export class UsersService {
             throw new NotFoundException(`Usuario no encontrado`)
         }
         return this.NoPassword(user)
+    }
+
+    async findByEmail(email: string) {
+        return await this.userModel.findOne({ email })
     }
 
     async update(id: string, updateUserDto: UpdateUserDto) {

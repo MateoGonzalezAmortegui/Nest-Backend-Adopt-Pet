@@ -11,6 +11,7 @@ import {
     ParseFilePipe,
     MaxFileSizeValidator,
     FileTypeValidator,
+    UseGuards,
 } from '@nestjs/common'
 import { PetsService } from './pets.service'
 import { CreatePetDto } from './dto/create-pet.dto'
@@ -18,7 +19,10 @@ import { UpdatePetDto } from './dto/update-pet.dto'
 import { FilesInterceptor } from '@nestjs/platform-express'
 import { MongoIdPipe } from 'src/common/mongo-id/mongo-id.pipe'
 import { updateImagesDto } from './dto/updateImages.dt'
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
+import { Public } from 'src/auth/decorator/public.decorator'
 
+@UseGuards(JwtAuthGuard)
 @Controller('pets')
 export class PetsController {
     constructor(private readonly petsService: PetsService) {}
@@ -44,6 +48,7 @@ export class PetsController {
         }
     }
 
+    @Public()
     @Get('all')
     async findAll() {
         try {

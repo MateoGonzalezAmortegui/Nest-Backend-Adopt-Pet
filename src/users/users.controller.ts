@@ -7,12 +7,16 @@ import {
     Param,
     Delete,
     ConflictException,
+    UseGuards,
 } from '@nestjs/common'
 import { UsersService } from './users.service'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { MongoIdPipe } from 'src/common/mongo-id/mongo-id.pipe'
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
+import { Public } from 'src/auth/decorator/public.decorator'
 
+@UseGuards(JwtAuthGuard)
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
@@ -27,6 +31,8 @@ export class UsersController {
         }
     }
 
+    //* Methods HTTP
+    @Public()
     @Post('sign-up')
     async create(@Body() createUserDto: CreateUserDto) {
         try {
