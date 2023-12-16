@@ -21,7 +21,10 @@ import { MongoIdPipe } from 'src/common/mongo-id/mongo-id.pipe'
 import { updateImagesDto } from './dto/updateImages.dt'
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
 import { Public } from 'src/auth/decorator/public.decorator'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 
+@ApiTags('pets')
+@ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 @Controller('pets')
 export class PetsController {

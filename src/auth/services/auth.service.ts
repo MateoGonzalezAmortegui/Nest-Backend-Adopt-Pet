@@ -6,6 +6,7 @@ import { payloadToken } from 'src/auth/models/token.mode'
 //* External
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt'
+import { CreateUserDto } from 'src/users/dto/create-user.dto'
 
 @Injectable()
 export class AuthService {
@@ -34,5 +35,10 @@ export class AuthService {
             access_token: this.jwtService.sign(payload),
             user,
         }
+    }
+
+    async createUser(createUserDto: CreateUserDto) {
+        const newUser = await this.userService.create(createUserDto)
+        return this.generateJWT(newUser)
     }
 }
