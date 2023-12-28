@@ -54,12 +54,11 @@ export class CreatePetDto {
     readonly longitude: string
 
     @IsOptional()
-    @ValidateNested({ each: true }) //* Indica que la validación se aplica a cada elemento del array
     @Type(() => VaccinationsDto) //* Le indica a class-transformer el tipo de la clase anidada
-    readonly vaccinations: VaccinationsDto[]
+    readonly vaccinations: VaccinationsDto
 
     @IsOptional()
-    @ValidateNested({ each: true })
+    @ValidateNested({ each: true }) //* Indica que la validación se aplica a cada elemento del array
     @Type(() => ImagesDto)
     readonly images: ImagesDto[]
 }

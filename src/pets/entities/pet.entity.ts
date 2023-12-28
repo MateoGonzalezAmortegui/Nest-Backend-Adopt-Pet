@@ -37,8 +37,8 @@ export class Pet {
     @Prop({ required: true })
     longitude: string
 
-    @Prop({ type: [VaccinationsDto], trim: true }) //* Object Array
-    vaccinations: VaccinationsDto[]
+    @Prop({ type: VaccinationsDto, trim: true }) //* Object Array
+    vaccinations: VaccinationsDto
 
     @Prop({ type: [ImagesDto] })
     images: ImagesDto[]
