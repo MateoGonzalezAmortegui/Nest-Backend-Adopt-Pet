@@ -92,7 +92,7 @@ export class PetsController {
     }
 
     @Patch('updateImages/:id')
-    @UseInterceptors(FilesInterceptor('file', 3))
+    @UseInterceptors(FilesInterceptor('file', 2))
     async updateImages(
         @UploadedFiles(
             new ParseFilePipe({
