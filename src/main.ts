@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { ValidationPipe } from '@nestjs/common'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { IncomingMessage, ServerResponse } from 'http'
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule)
@@ -19,6 +20,33 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config)
     SwaggerModule.setup('docs', app, document)
 
-    await app.listen(process.env.URL || 3001)
+    await app.init()
+    return app
 }
-bootstrap()
+
+let cachedServer
+
+export default async function handler(
+    req: IncomingMessage,
+    res: ServerResponse,
+) {
+    if (!cachedServer) {
+        const app = await bootstrap()
+        cachedServer = app.getHttpAdapter().getInstance()
+    }
+    cachedServer(req, res)
+}
+
+// Iniciar la aplicación localmente si no se está ejecutando en Vercel
+if (process.env.NODE_ENV !== 'production') {
+    const port = process.env.URL
+    bootstrap()
+        .then((app) => {
+            app.listen(port, () => {
+                console.log(
+                    `Application is running on: http://localhost:${port}`,
+                )
+            })
+        })
+        .catch((err) => console.error('Error starting server', err))
+}
